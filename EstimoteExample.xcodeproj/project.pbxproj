@@ -15,6 +15,8 @@
 		05B6E2D21BDAAD3700B767D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05B6E2D01BDAAD3700B767D0 /* LaunchScreen.storyboard */; };
 		05B6E2DD1BDAAD3700B767D0 /* EstimoteExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E2DC1BDAAD3700B767D0 /* EstimoteExampleTests.m */; };
 		05B6E2E81BDAAD3700B767D0 /* EstimoteExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E2E71BDAAD3700B767D0 /* EstimoteExampleUITests.m */; };
+		05B6E2F71BDC290500B767D0 /* Simplify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 05B6E2F51BDC290500B767D0 /* Simplify.bundle */; };
+		05B6E2F81BDC290500B767D0 /* Simplify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B6E2F61BDC290500B767D0 /* Simplify.framework */; };
 		7E6074C3096CC150AA970180 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C90F635E917052106A6BAF60 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +54,9 @@
 		05B6E2E31BDAAD3700B767D0 /* EstimoteExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstimoteExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05B6E2E71BDAAD3700B767D0 /* EstimoteExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EstimoteExampleUITests.m; sourceTree = "<group>"; };
 		05B6E2E91BDAAD3700B767D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05B6E2F51BDC290500B767D0 /* Simplify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Simplify.bundle; sourceTree = "<group>"; };
+		05B6E2F61BDC290500B767D0 /* Simplify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Simplify.framework; sourceTree = "<group>"; };
+		05B6E2F91BDC2BEA00B767D0 /* EstimoteExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = EstimoteExample.entitlements; sourceTree = "<group>"; };
 		C3999A9E6F431F6CDAF76DB0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C90F635E917052106A6BAF60 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84C528E8B7F43BCCD3D9220 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E6074C3096CC150AA970180 /* libPods.a in Frameworks */,
+				05B6E2F81BDC290500B767D0 /* Simplify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +114,7 @@
 		05B6E2C11BDAAD3700B767D0 /* EstimoteExample */ = {
 			isa = PBXGroup;
 			children = (
+				05B6E2F91BDC2BEA00B767D0 /* EstimoteExample.entitlements */,
 				05B6E2C51BDAAD3700B767D0 /* AppDelegate.h */,
 				05B6E2C61BDAAD3700B767D0 /* AppDelegate.m */,
 				05B6E2C81BDAAD3700B767D0 /* ViewController.h */,
@@ -159,6 +166,8 @@
 		8E96BE70BE637A9D86E27865 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05B6E2F51BDC290500B767D0 /* Simplify.bundle */,
+				05B6E2F61BDC290500B767D0 /* Simplify.framework */,
 				C90F635E917052106A6BAF60 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -233,6 +242,12 @@
 				TargetAttributes = {
 					05B6E2BE1BDAAD3700B767D0 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = E5HMDQRS6Z;
+						SystemCapabilities = {
+							com.apple.OMC = {
+								enabled = 1;
+							};
+						};
 					};
 					05B6E2D71BDAAD3700B767D0 = {
 						CreatedOnToolsVersion = 7.1;
@@ -269,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05B6E2F71BDC290500B767D0 /* Simplify.bundle in Resources */,
 				05B6E2D21BDAAD3700B767D0 /* LaunchScreen.storyboard in Resources */,
 				05B6E2CF1BDAAD3700B767D0 /* Assets.xcassets in Resources */,
 				05B6E2CD1BDAAD3700B767D0 /* Main.storyboard in Resources */,
@@ -471,11 +487,19 @@
 			baseConfigurationReference = C3999A9E6F431F6CDAF76DB0 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EstimoteExample/EstimoteExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EstimoteExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.velle.EstimoteExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -484,11 +508,19 @@
 			baseConfigurationReference = E84C528E8B7F43BCCD3D9220 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EstimoteExample/EstimoteExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EstimoteExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.velle.EstimoteExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
