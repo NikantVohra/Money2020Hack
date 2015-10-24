@@ -1,1 +1,2 @@
+pod 'PULPulsate'
 pod "EstimoteIndoorSDK"

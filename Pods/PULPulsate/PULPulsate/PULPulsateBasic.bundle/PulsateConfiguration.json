@@ -1,0 +1,78 @@
+{
+    "pulsate_labels_configuration": {
+        "locale": "en",
+        "reply_button_label": "Reply",
+        "new_message_button_label" : "New Message",
+        "new_messages_button_label" : "New Messages",
+        "new_updates" : "New Updates",
+        "no_internet_connection" : "No Internet Connection",
+        "view_conversation_button_label" : "View Conversation",
+        "select_subject_label": "Please select a subject",
+        "write_a_message_hint": "Write a message...",
+        "navbar_labels": {
+            "feed_title_label": "Feed",
+            "new_message_title_label": "New Message"
+        },
+        
+        "talk_subject_labels": {
+            "subject_feedback_label": "Feedback",
+            "subject_feature_suggestion_label": "Feature Suggestion",
+            "subject_complaint_label": "Complaint",
+            "subject_other_label": "Other..."
+        },
+        
+        "feed_is_empty_description": {
+            "feed_is_empty_title": "Your Feed is Empty",
+            "icon_left_text": "Tap the",
+            "icon_right_text": "icon to start a",
+            "icon_bottom_text": "new conversation with us.",
+            "second_paragraph_text": "You can use this section to \n ask questions or send feedback"
+        },
+        
+        "message_sending_info" :
+        {
+            "message_sending" : "Message Sending...",
+            "message_sent" : "Message Sent",
+            "message_failed" : "No Internet Connection",
+            "try_again" : "Try Again?"
+        }
+        
+    },
+    "pulsate_colors_configuration": {
+        
+        "pulsate_top_nav_bar_background_color" : "",
+        "pulsate_top_nav_bar_title_color" : "",
+        "pulsate_back_button_color" : "",
+        "pulsate_close_button_color" : "",
+        
+        "pulsate_feed_pencil_color" : "",
+        "pulsate_feed_pencil_background_color" : "",
+        
+        "pulsate_card_admin_name_text_color" : "",
+        "pulsate_card_admin_title_text_color" : "",
+        "pulsate_card_reply_button_text_color" : "",
+        "pulsate_card_right_button_text_color" : "",
+        
+        "pulsate_thread_card_new_message_text_color" : "",
+        
+        "pulsate_thread_user_bubble_color" : "",
+        "pulsate_thread_user_bubble_text_color" : "",
+        
+        "pulsate_thread_admin_bubble_color" : "",
+        "pulsate_thread_admin_bubble_text_color" : "",
+        
+        "pulsate_thread_bubble_date_color" : "",
+        
+        "pulsate_thread_bottom_bar_divider_color" : "",
+        "pulsate_thread_send_button_color" : "",
+        "pulsate_thread_select_subject_text_color" : "",
+        "pulsate_thread_select_subject_icon_color" : "",
+        "pulsate_thread_select_subject_dropdown_background_color" : "",
+        
+        "pulsate_card_back_reply_icon_color" : "",
+        "pulsate_card_back_button_color" : "",
+        "pulsate_card_back_button_text_color" : "",
+        "pulsate_card_back_table_label_text_color" : "",
+        "pulsate_card_back_table_value_text_color" : ""
+    }
+}

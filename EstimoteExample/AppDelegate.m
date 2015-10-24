@@ -7,16 +7,25 @@
 //
 
 #import "AppDelegate.h"
-
+#import <PULPulsate/PULPulsate.h>
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+{
+    PULPulsateManager* _pulsateManager;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSError* error;
+    
+    PULAuthorizationData* authData = [[PULAuthorizationData alloc] initWithAppId:@"2dc7ebe084282ea6e09f02a60510b20393ec4f618d5c27584b3d48603af44340" andAppKey:@"8005943fed35b0531fffc28a65eba29c23ffddd1c487d85a8490ca255eb1c6a3" validationError:&error];
+        
+    _pulsateManager = [PULPulsateFactory getInstanceWithAuthorizationData:authData withLocationEnabled:YES withPushEnabled:YES withLaunchOptions:launchOptions error:&error];
+    [_pulsateManager startPulsateSession];
+    
     return YES;
 }
 

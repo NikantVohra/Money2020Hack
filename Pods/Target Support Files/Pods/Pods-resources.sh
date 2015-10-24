@@ -93,6 +93,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/SixBeaconsView.xib"
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/wall_bump.wav"
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/Images"
+  install_resource "PULPulsate/PULPulsate/PULPulsateBasic.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/5a.mov"
@@ -130,6 +131,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/SixBeaconsView.xib"
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/wall_bump.wav"
   install_resource "EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/Images"
+  install_resource "PULPulsate/PULPulsate/PULPulsateBasic.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

@@ -2,12 +2,15 @@ PODS:
   - EstimoteIndoorSDK (1.6.0):
     - EstimoteSDK (~> 2.4.0)
   - EstimoteSDK (2.4.0)
+  - PULPulsate (1.97.2)
 
 DEPENDENCIES:
   - EstimoteIndoorSDK
+  - PULPulsate
 
 SPEC CHECKSUMS:
   EstimoteIndoorSDK: 62ee267efbf5450aebffdb2c125f3f16440afb43
   EstimoteSDK: d130c9d111b1c0522222afc97b43f245660cbd7c
+  PULPulsate: 69bf48a216f1d4f11befe2c4f0567b9bf3571a8d
 
 COCOAPODS: 0.38.2
