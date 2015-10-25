@@ -31,8 +31,10 @@
 @property (nonatomic) ESTOrientedPoint *currentLocationPoint;
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (nonatomic ,strong) ESTPoint *beaconEntrance;
-@property (nonatomic ,strong) ESTPoint *beaconWall;
+@property (nonatomic ,strong) NSString *previouslocation;
 
+@property (nonatomic ,strong) ESTPoint *beaconWall;
+@property (nonatomic) BOOL isLocationChanged;
 @property NSArray *products;
 @end
 
@@ -47,7 +49,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
+    //self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
     
     self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
@@ -56,6 +58,7 @@
     [self changeCheckoutValues];
     self.tableView.tableFooterView = [UIView new]
     ;
+    self.previouslocation = @"asdads";
     self.locationManager = [ESTIndoorLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager fetchNearbyPublicLocationsWithSuccess:^(id object) {
@@ -67,13 +70,17 @@
         
     }];
     
+    self.isLocationChanged = NO;
+    
+    
+    
     PNConfiguration *configuration = [PNConfiguration configurationWithPublishKey:@"pub-c-8bd872c9-064b-48b1-84cc-4827a9c77968"
                                                                      subscribeKey:@"sub-c-e412cdee-7adb-11e5-ad8e-02ee2ddab7fe"];
     self.client = [PubNub clientWithConfiguration:configuration];
     [NSTimer scheduledTimerWithTimeInterval: 2.0 target: self
                                    selector: @selector(sendPosition) userInfo: nil repeats: YES];
     
-    [self getAllProducts:10 y:10];
+    
     
 }
 
@@ -138,6 +145,10 @@
     NSDictionary *product = [self.products objectAtIndex:indexPath.row];
     cell.name.text = product[@"name"];
     cell.delegate = self;
+    if([UIImage imageNamed:product[@"id"]]) {
+        cell.imageProduct.image = [UIImage imageNamed:product[@"id"]];
+    }
+        
     cell.price.text = [NSString stringWithFormat:@"$%d", [product[@"price"] intValue]];
     cell.number.text = [NSString stringWithFormat:@"%d", [[self.numProducts objectAtIndex:indexPath.row] intValue]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -238,13 +249,26 @@ didFailToUpdatePositionWithError:(NSError *)error {
     }
     NSLog(@"x: %5.2f, y: %5.2f, orientation: %3.0f, accuracy: %@",
           position.x, position.y, position.orientation, accuracy);
+    self.beaconEntrance = [[ESTPoint alloc] initWithX:10.0 y:14];;
+    self.beaconWall = [[ESTPoint alloc] initWithX:-10.0 y:7.0];;
+
+    if ([self.currentLocationPoint distanceToPoint:self.beaconEntrance] < 10 && ![self.previouslocation isEqualToString:@"enter"]) {
+        self.previouslocation = @"enter";
+        [self getAllProducts:10 y:10];
+    }
+    else if ([self.currentLocationPoint
+              distanceToPoint:self.beaconWall] < 10 && ![self.previouslocation isEqualToString:@"exit"]) {
+        [self getAllProducts:40 y:40];
+        self.previouslocation = @"exit";
+    }
 }
 
 -(void)getAllProducts:(int)x y: (int)y {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:  @"http://52.26.246.1:9000/product/10/10" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:  [NSString stringWithFormat: @"http://52.26.246.1:9000/product/%d/%d", x, y] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.products = responseObject[@"products"];
+        [self.numProducts removeAllObjects];
         for(int i = 0; i < self.products.count ; i++) {
             [self.numProducts addObject:[NSNumber numberWithInt:0] ];
         }

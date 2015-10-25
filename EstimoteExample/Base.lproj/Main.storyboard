@@ -241,13 +241,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lays Chips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWT-26-mnH">
                                                     <rect key="frame" x="101" y="18" width="83.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$1.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUL-vz-EN6">
                                                     <rect key="frame" x="101" y="46" width="38" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-K8-aPc">
@@ -264,7 +264,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moZ-Ml-X6q">
                                                     <rect key="frame" x="297" y="53" width="11" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baJ-rU-HVL">
@@ -327,7 +327,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cu-fh-d1s">
                                 <rect key="frame" x="101" y="573" width="32" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkJ-89-lH5">
@@ -377,8 +377,8 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="G5Q-1U-Qi3"/>
-                                <exclude reference="KP0-G0-sMi"/>
                                 <exclude reference="Zxq-QJ-6aL"/>
+                                <exclude reference="KP0-G0-sMi"/>
                             </mask>
                         </variation>
                     </view>
@@ -387,11 +387,41 @@
                         <outlet property="numberLabel" destination="AcV-BQ-HfG" id="GiA-K3-gaZ"/>
                         <outlet property="tableView" destination="vws-Kh-HRM" id="h6R-N3-J7o"/>
                         <outlet property="totalAmountLabel" destination="4Cu-fh-d1s" id="KZr-T2-H5k"/>
+                        <segue destination="6pm-66-kXN" kind="show" identifier="verifySegue" id="obg-iS-Mx2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cwr-3r-MOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4587.5" y="439.5"/>
+            <point key="canvasLocation" x="4563.5" y="418.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ADk-i7-r3v">
+            <objects>
+                <viewController id="6pm-66-kXN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hpJ-1u-all"/>
+                        <viewControllerLayoutGuide type="bottom" id="ymQ-el-frq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oab-uJ-g4o">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Verify" translatesAutoresizingMaskIntoConstraints="NO" id="STT-gO-4XS">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="STT-gO-4XS" firstAttribute="leading" secondItem="oab-uJ-g4o" secondAttribute="leading" id="7Ym-Qh-EGw"/>
+                            <constraint firstItem="ymQ-el-frq" firstAttribute="top" secondItem="STT-gO-4XS" secondAttribute="bottom" id="Emk-mZ-Qo7"/>
+                            <constraint firstItem="STT-gO-4XS" firstAttribute="top" secondItem="hpJ-1u-all" secondAttribute="bottom" id="Sew-5e-ed1"/>
+                            <constraint firstAttribute="trailing" secondItem="STT-gO-4XS" secondAttribute="trailing" id="xc4-Mu-4DE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9JJ-IZ-uIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5114" y="385"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="uHO-8R-Uph">
@@ -561,6 +591,7 @@
         <image name="Conceirge" width="652" height="1046"/>
         <image name="Profile" width="662" height="968"/>
         <image name="Recipt" width="660" height="1016"/>
+        <image name="Verify" width="672" height="1082"/>
         <image name="add139 (1)" width="64" height="64"/>
         <image name="button63" width="32" height="32"/>
         <image name="lays" width="190" height="265"/>
