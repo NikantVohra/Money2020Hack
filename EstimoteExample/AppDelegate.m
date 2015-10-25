@@ -8,14 +8,13 @@
 
 #import "AppDelegate.h"
 #import <PULPulsate/PULPulsate.h>
-@interface AppDelegate ()
+#import <AFNetworking/AFNetworking.h>
 
+@interface AppDelegate ()
+@property(nonatomic , strong) PULPulsateManager* pulsateManager;
 @end
 
 @implementation AppDelegate
-{
-    PULPulsateManager* _pulsateManager;
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -25,12 +24,29 @@
         
     _pulsateManager = [PULPulsateFactory getInstanceWithAuthorizationData:authData withLocationEnabled:YES withPushEnabled:YES withLaunchOptions:launchOptions error:&error];
     [_pulsateManager startPulsateSession];
+    [self getUser];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
-    
     return YES;
 }
 
+
+-(void)getUser {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:  [NSString stringWithFormat: @"http://52.26.246.1:9000/user/562d087cf97bc67cc32e911e"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", [responseObject objectForKey:@"name"]);
+        [self.pulsateManager updateFirstName:[responseObject objectForKey:@"name"]];
+        [self.pulsateManager createAttribute:@"purchasePower" withInteger:[[responseObject objectForKey:@"purchasePower"] integerValue]];
+        [self.pulsateManager createAttribute:@"frequency" withInteger:[[responseObject objectForKey:@"frequency"] integerValue]];
+        [self.pulsateManager createAttribute:@"segment" withString:[responseObject objectForKey:@"segment"] ];
+        [self.pulsateManager createAttribute:@"level" withString:[responseObject objectForKey:@"level"] ];
+
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

@@ -73,7 +73,7 @@
     self.isLocationChanged = NO;
     
     
-    
+    [self getAllProducts:40 y:40];
     PNConfiguration *configuration = [PNConfiguration configurationWithPublishKey:@"pub-c-8bd872c9-064b-48b1-84cc-4827a9c77968"
                                                                      subscribeKey:@"sub-c-e412cdee-7adb-11e5-ad8e-02ee2ddab7fe"];
     self.client = [PubNub clientWithConfiguration:configuration];
@@ -252,12 +252,12 @@ didFailToUpdatePositionWithError:(NSError *)error {
     self.beaconEntrance = [[ESTPoint alloc] initWithX:10.0 y:14];;
     self.beaconWall = [[ESTPoint alloc] initWithX:-10.0 y:7.0];;
 
-    if ([self.currentLocationPoint distanceToPoint:self.beaconEntrance] < 10 && ![self.previouslocation isEqualToString:@"enter"]) {
+    if ([self.currentLocationPoint distanceToPoint:self.beaconEntrance] < 15 && ![self.previouslocation isEqualToString:@"enter"]) {
         self.previouslocation = @"enter";
         [self getAllProducts:10 y:10];
     }
     else if ([self.currentLocationPoint
-              distanceToPoint:self.beaconWall] < 10 && ![self.previouslocation isEqualToString:@"exit"]) {
+              distanceToPoint:self.beaconWall] < 15 && ![self.previouslocation isEqualToString:@"exit"]) {
         [self getAllProducts:40 y:40];
         self.previouslocation = @"exit";
     }
