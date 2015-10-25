@@ -17,6 +17,11 @@
 		05B6E2E81BDAAD3700B767D0 /* EstimoteExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E2E71BDAAD3700B767D0 /* EstimoteExampleUITests.m */; };
 		05B6E2F71BDC290500B767D0 /* Simplify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 05B6E2F51BDC290500B767D0 /* Simplify.bundle */; };
 		05B6E2F81BDC290500B767D0 /* Simplify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B6E2F61BDC290500B767D0 /* Simplify.framework */; };
+		05B6E2FD1BDC494D00B767D0 /* ESTIndoorLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E2FB1BDC494D00B767D0 /* ESTIndoorLocationViewController.m */; };
+		05B6E2FE1BDC494D00B767D0 /* ESTIndoorLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B6E2FC1BDC494D00B767D0 /* ESTIndoorLocationViewController.xib */; };
+		05B6E3011BDC75FC00B767D0 /* ShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E3001BDC75FC00B767D0 /* ShoppingCartViewController.m */; };
+		05B6E3041BDC793600B767D0 /* ShoppingCartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B6E3031BDC793600B767D0 /* ShoppingCartCell.m */; };
+		05B6E3061BDC8A6F00B767D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B6E3051BDC8A6F00B767D0 /* QuartzCore.framework */; };
 		7E6074C3096CC150AA970180 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C90F635E917052106A6BAF60 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +62,14 @@
 		05B6E2F51BDC290500B767D0 /* Simplify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Simplify.bundle; sourceTree = "<group>"; };
 		05B6E2F61BDC290500B767D0 /* Simplify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Simplify.framework; sourceTree = "<group>"; };
 		05B6E2F91BDC2BEA00B767D0 /* EstimoteExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = EstimoteExample.entitlements; sourceTree = "<group>"; };
+		05B6E2FA1BDC494D00B767D0 /* ESTIndoorLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTIndoorLocationViewController.h; sourceTree = "<group>"; };
+		05B6E2FB1BDC494D00B767D0 /* ESTIndoorLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESTIndoorLocationViewController.m; sourceTree = "<group>"; };
+		05B6E2FC1BDC494D00B767D0 /* ESTIndoorLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ESTIndoorLocationViewController.xib; sourceTree = "<group>"; };
+		05B6E2FF1BDC75FC00B767D0 /* ShoppingCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartViewController.h; sourceTree = "<group>"; };
+		05B6E3001BDC75FC00B767D0 /* ShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartViewController.m; sourceTree = "<group>"; };
+		05B6E3021BDC793600B767D0 /* ShoppingCartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartCell.h; sourceTree = "<group>"; };
+		05B6E3031BDC793600B767D0 /* ShoppingCartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartCell.m; sourceTree = "<group>"; };
+		05B6E3051BDC8A6F00B767D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C3999A9E6F431F6CDAF76DB0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C90F635E917052106A6BAF60 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84C528E8B7F43BCCD3D9220 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -67,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05B6E3061BDC8A6F00B767D0 /* QuartzCore.framework in Frameworks */,
 				7E6074C3096CC150AA970180 /* libPods.a in Frameworks */,
 				05B6E2F81BDC290500B767D0 /* Simplify.framework in Frameworks */,
 			);
@@ -119,6 +133,13 @@
 				05B6E2C61BDAAD3700B767D0 /* AppDelegate.m */,
 				05B6E2C81BDAAD3700B767D0 /* ViewController.h */,
 				05B6E2C91BDAAD3700B767D0 /* ViewController.m */,
+				05B6E2FA1BDC494D00B767D0 /* ESTIndoorLocationViewController.h */,
+				05B6E2FB1BDC494D00B767D0 /* ESTIndoorLocationViewController.m */,
+				05B6E2FF1BDC75FC00B767D0 /* ShoppingCartViewController.h */,
+				05B6E3001BDC75FC00B767D0 /* ShoppingCartViewController.m */,
+				05B6E3021BDC793600B767D0 /* ShoppingCartCell.h */,
+				05B6E3031BDC793600B767D0 /* ShoppingCartCell.m */,
+				05B6E2FC1BDC494D00B767D0 /* ESTIndoorLocationViewController.xib */,
 				05B6E2CB1BDAAD3700B767D0 /* Main.storyboard */,
 				05B6E2CE1BDAAD3700B767D0 /* Assets.xcassets */,
 				05B6E2D01BDAAD3700B767D0 /* LaunchScreen.storyboard */,
@@ -166,6 +187,7 @@
 		8E96BE70BE637A9D86E27865 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05B6E3051BDC8A6F00B767D0 /* QuartzCore.framework */,
 				05B6E2F51BDC290500B767D0 /* Simplify.bundle */,
 				05B6E2F61BDC290500B767D0 /* Simplify.framework */,
 				C90F635E917052106A6BAF60 /* libPods.a */,
@@ -285,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05B6E2F71BDC290500B767D0 /* Simplify.bundle in Resources */,
+				05B6E2FE1BDC494D00B767D0 /* ESTIndoorLocationViewController.xib in Resources */,
 				05B6E2D21BDAAD3700B767D0 /* LaunchScreen.storyboard in Resources */,
 				05B6E2CF1BDAAD3700B767D0 /* Assets.xcassets in Resources */,
 				05B6E2CD1BDAAD3700B767D0 /* Main.storyboard in Resources */,
@@ -346,8 +369,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				05B6E2CA1BDAAD3700B767D0 /* ViewController.m in Sources */,
+				05B6E2FD1BDC494D00B767D0 /* ESTIndoorLocationViewController.m in Sources */,
 				05B6E2C71BDAAD3700B767D0 /* AppDelegate.m in Sources */,
+				05B6E3011BDC75FC00B767D0 /* ShoppingCartViewController.m in Sources */,
 				05B6E2C41BDAAD3700B767D0 /* main.m in Sources */,
+				05B6E3041BDC793600B767D0 /* ShoppingCartCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

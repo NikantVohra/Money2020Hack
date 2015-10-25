@@ -8,11 +8,14 @@
 
 #import "ViewController.h"
 #import <Simplify/SIMChargeCardViewController.h>
-
+#import "ESTPositionView.h"
+#import "ESTIndoorLocationView.h"
+#import "ESTIndoorLocationViewController.h"
 @interface ViewController () <ESTIndoorLocationManagerDelegate, SIMChargeCardViewControllerDelegate>
 
 @property (nonatomic) ESTIndoorLocationManager *locationManager;
 @property (nonatomic) ESTLocation *location;
+@property (weak, nonatomic) IBOutlet UIButton *shopbutton;
 
 @end
 
@@ -26,20 +29,32 @@
     [super viewDidLoad];
     // 4. Instantiate the location manager & set its delegate
     [ESTConfig setupAppID:@"money2020-hkx" andAppToken:@"11620815090eb88f60683cda6ab5fd5a"];
+    NSLog(@"%d",[ESTConfig isAuthorized]);
     self.locationManager = [ESTIndoorLocationManager new];
     self.locationManager.delegate = self;
     
-    [self.locationManager fetchLocationByIdentifier:@"my-kitchen" withSuccess:^(id object) {
-        self.location = object;
-        [self.locationManager startIndoorLocation:self.location];
 
+    [self.locationManager fetchNearbyPublicLocationsWithSuccess:^(id object) {
+        self.location = [object firstObject];
+        
+        [self.locationManager startIndoorLocation:self.location];
+       // ESTIndoorLocationViewController *navigationVC = [[ESTIndoorLocationViewController alloc] initWithLocation:self.location];
+        //[self.navigationController pushViewController:navigationVC animated:YES];
+        NSLog(@"%@", self.location);
     } failure:^(NSError *error) {
-        NSLog(@"can't fetch location: %@", error);
+        
     }];
-    
-    
     //4. Add SIMChargeViewController to your view hierarchy
     
+}
+- (IBAction)shop:(id)sender {
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -57,7 +72,7 @@
     //3. Assign your class as the delegate to the SIMChargeViewController class which takes the user input and requests a token
     chargeVC.delegate = self;
 
-    [self presentViewController:chargeVC animated:YES completion:nil];
+    //[self presentViewController:chargeVC animated:YES completion:nil];
 
 }
 - (void)didReceiveMemoryWarning {
@@ -67,26 +82,6 @@
 }
 
 
--    (void)indoorLocationManager:(ESTIndoorLocationManager *)manager
-didFailToUpdatePositionWithError:(NSError *)error {
-    NSLog(@"failed to update position: %@", error);
-}
-
-- (void)indoorLocationManager:(ESTIndoorLocationManager *)manager
-            didUpdatePosition:(ESTOrientedPoint *)position
-                 withAccuracy:(ESTPositionAccuracy)positionAccuracy
-                   inLocation:(ESTLocation *)location {
-    NSString *accuracy;
-    switch (positionAccuracy) {
-        case ESTPositionAccuracyVeryHigh: accuracy = @"+/- 1.00m"; break;
-        case ESTPositionAccuracyHigh:     accuracy = @"+/- 1.62m"; break;
-        case ESTPositionAccuracyMedium:   accuracy = @"+/- 2.62m"; break;
-        case ESTPositionAccuracyLow:      accuracy = @"+/- 4.24m"; break;
-        case ESTPositionAccuracyVeryLow:  accuracy = @"+/- ? :-("; break;
-    }
-    NSLog(@"x: %5.2f, y: %5.2f, orientation: %3.0f, accuracy: %@",
-          position.x, position.y, position.orientation, accuracy);
-}
 
 
 -(void)creditCardTokenProcessed:(SIMCreditCardToken *)token {
