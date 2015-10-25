@@ -9,13 +9,18 @@
 #import "ShoppingCartViewController.h"
 #import "ShoppingCartCell.h"
 #import <QuartzCore/QuartzCore.h>
-@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate>
+#import <Simplify/SIMChargeCardViewController.h>
+
+@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *numProducts;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property ( nonatomic) NSInteger totalNumProducts;
+@property ( nonatomic) NSInteger totalAmount;
+
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
+
 @property NSArray *products;
 @end
 
@@ -26,9 +31,10 @@
     // Do any additional setup after loading the view.
     self.title = @"Shop";
     self.totalNumProducts = 0;
+    self.totalAmount = 0;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : @"1.00"},@{@"id" : @"345345", @"name" : @"Lays", @"price" : @"1.00"}, @{@"id" : @"345345", @"name" : @"Lays", @"price" : @"1.00"}];
+    self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
     self.numProducts = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], [NSNumber numberWithInt:0]]];
     self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
@@ -44,6 +50,20 @@
 }
 
 - (IBAction)checkout:(id)sender {
+    PKPaymentRequest* paymentRequest = [[PKPaymentRequest alloc] init];
+    paymentRequest.merchantIdentifier = @"merchant.com.velle.money2020";
+    paymentRequest.merchantCapabilities = PKMerchantCapabilityEMV | PKMerchantCapability3DS;
+    paymentRequest.supportedNetworks = @[PKPaymentNetworkAmex, PKPaymentNetworkMasterCard, PKPaymentNetworkVisa];
+    paymentRequest.countryCode = @"US";
+    PKPaymentSummaryItem *item = [PKPaymentSummaryItem summaryItemWithLabel:@"Test Item" amount:[NSDecimalNumber decimalNumberWithString:@"0.01"]];
+    paymentRequest.paymentSummaryItems = @[item];
+    paymentRequest.currencyCode = @"USD";
+    SIMChargeCardViewController *chargeVC = [[SIMChargeCardViewController alloc] initWithPublicKey:@"sbpb_NjhjODgwNTctNDVkYS00MzNmLWFmZDgtYzkzMTcyZTgwZmZl" paymentRequest:paymentRequest];
+    
+    //3. Assign your class as the delegate to the SIMChargeViewController class which takes the user input and requests a token
+    chargeVC.delegate = self;
+    
+    [self presentViewController:chargeVC animated:YES completion:nil];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -63,7 +83,7 @@
     NSDictionary *product = [self.products objectAtIndex:indexPath.row];
     cell.name.text = product[@"name"];
     cell.delegate = self;
-    cell.price.text = product[@"price"];
+    cell.price.text = [NSString stringWithFormat:@"$%d", [product[@"price"] intValue]];
     cell.number.text = [NSString stringWithFormat:@"%d", [[self.numProducts objectAtIndex:indexPath.row] intValue]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -84,6 +104,7 @@
         self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)self.totalNumProducts];
         self.numberLabel.hidden = NO;
         self.totalAmountLabel.hidden = NO;
+        self.totalAmountLabel.text = [NSString stringWithFormat:@"$%ld", (long)self.totalAmount];
         self.checkoutButton.enabled = YES;
         self.checkoutButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0f];
     }
@@ -103,6 +124,7 @@
     if([self.numProducts[indexPath.row] intValue] != 0) {
         self.numProducts[indexPath.row] = [NSNumber numberWithInteger:[self.numProducts[indexPath.row] intValue] - 1];
         self.totalNumProducts --;
+        self.totalAmount = self.totalAmount -  [self.products[indexPath.row][@"price"] intValue];
     }
     NSLog(@"%d",[self.numProducts[indexPath.row] intValue]);
     [self changeCheckoutValues];
@@ -112,10 +134,31 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSLog(@"%@",self.products[indexPath.row]);
         self.numProducts[indexPath.row] = [NSNumber numberWithInteger:[self.numProducts[indexPath.row] intValue] + 1];
+     self.totalAmount = self.totalAmount +  [self.products[indexPath.row][@"price"] intValue];
     self.totalNumProducts++;
+    
     [self changeCheckoutValues];
     [self.tableView reloadData];
+}
 
+
+-(void)creditCardTokenProcessed:(SIMCreditCardToken *)token {
+    
+    //Process the provided token
+    NSLog(@"Token:%@", token.token);
+    
+}
+
+-(void)chargeCardCancelled {
+    
+    //User cancelled the SIMChargeCardViewController
+    NSLog(@"User Cancelled");
+    
+}
+
+-(void)creditCardTokenFailedWithError:(NSError *)error {
+    
+    NSLog(@"Credit Card Token Failed with error:%@", error.localizedDescription);
     
 }
 @end
