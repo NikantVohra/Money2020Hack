@@ -25,6 +25,8 @@
         
     _pulsateManager = [PULPulsateFactory getInstanceWithAuthorizationData:authData withLocationEnabled:YES withPushEnabled:YES withLaunchOptions:launchOptions error:&error];
     [_pulsateManager startPulsateSession];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
     
     return YES;
 }

@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 4. Instantiate the location manager & set its delegate
+    self.navigationController.navigationBarHidden = YES;
     [ESTConfig setupAppID:@"money2020-hkx" andAppToken:@"11620815090eb88f60683cda6ab5fd5a"];
     NSLog(@"%d",[ESTConfig isAuthorized]);
     self.locationManager = [ESTIndoorLocationManager new];
@@ -38,8 +39,7 @@
         self.location = [object firstObject];
         
         [self.locationManager startIndoorLocation:self.location];
-       // ESTIndoorLocationViewController *navigationVC = [[ESTIndoorLocationViewController alloc] initWithLocation:self.location];
-        //[self.navigationController pushViewController:navigationVC animated:YES];
+        
         NSLog(@"%@", self.location);
     } failure:^(NSError *error) {
         

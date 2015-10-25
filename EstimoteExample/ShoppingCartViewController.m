@@ -10,16 +10,28 @@
 #import "ShoppingCartCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import <Simplify/SIMChargeCardViewController.h>
+#import <PubNub/PubNub.h>
 
-@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate>
+#import "ESTIndoorLocationViewController.h"
+#import "ESTIndoorLocationManager.h"
+#import "ESTIndoorLocationView.h"
+#import "ESTPositionView.h"
+#import <AFNetworking/AFNetworking.h>
+
+@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate, ESTIndoorLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *numProducts;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property ( nonatomic) NSInteger totalNumProducts;
 @property ( nonatomic) NSInteger totalAmount;
-
+@property (nonatomic) ESTIndoorLocationManager *locationManager;
+@property (nonatomic) ESTLocation *location;
+@property (nonatomic) PubNub *client;
+@property (nonatomic) ESTOrientedPoint *currentLocationPoint;
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
+@property (nonatomic ,strong) ESTPoint *beaconEntrance;
+@property (nonatomic ,strong) ESTPoint *beaconWall;
 
 @property NSArray *products;
 @end
@@ -34,15 +46,58 @@
     self.totalAmount = 0;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
     self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
-    self.numProducts = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], [NSNumber numberWithInt:0]]];
+    
     self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
     self.numberLabel.layer.cornerRadius = self.numberLabel.frame.size.width /2.0;
     self.numberLabel.layer.masksToBounds = YES;
     [self changeCheckoutValues];
     self.tableView.tableFooterView = [UIView new]
-    ;}
+    ;
+    self.locationManager = [ESTIndoorLocationManager new];
+    self.locationManager.delegate = self;
+    [self.locationManager fetchNearbyPublicLocationsWithSuccess:^(id object) {
+        self.location = [object firstObject];
+        
+        [self.locationManager startIndoorLocation:self.location];
+        NSLog(@"%@", self.location);
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    PNConfiguration *configuration = [PNConfiguration configurationWithPublishKey:@"pub-c-8bd872c9-064b-48b1-84cc-4827a9c77968"
+                                                                     subscribeKey:@"sub-c-e412cdee-7adb-11e5-ad8e-02ee2ddab7fe"];
+    self.client = [PubNub clientWithConfiguration:configuration];
+    [NSTimer scheduledTimerWithTimeInterval: 2.0 target: self
+                                   selector: @selector(sendPosition) userInfo: nil repeats: YES];
+    
+    [self getAllProducts:10 y:10];
+    
+}
+
+-(void)sendPosition {
+    if(self.currentLocationPoint) {
+        [self.client publish: @{@"x" : [NSNumber numberWithDouble: self.currentLocationPoint.x], @"y" : [NSNumber numberWithDouble: self.currentLocationPoint.y]} toChannel: @"money2020" storeInHistory:YES
+              withCompletion:^(PNPublishStatus *status) {
+                  
+                  // Check whether request successfully completed or not.
+                  if (!status.isError) {
+                      
+                      // Message successfully published to specified channel.
+                  }
+                  // Request processing failed.
+                  else {
+                      
+                      // Handle message publish error. Check 'category' property to find out possible issue
+                      // because of which request did fail.
+                      //
+                      // Request can be resent using: [status retry];
+                  }
+              }];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -142,6 +197,7 @@
 }
 
 
+
 -(void)creditCardTokenProcessed:(SIMCreditCardToken *)token {
     
     //Process the provided token
@@ -160,5 +216,42 @@
     
     NSLog(@"Credit Card Token Failed with error:%@", error.localizedDescription);
     
+}
+
+-    (void)indoorLocationManager:(ESTIndoorLocationManager *)manager
+didFailToUpdatePositionWithError:(NSError *)error {
+    NSLog(@"failed to update position: %@", error);
+}
+
+- (void)indoorLocationManager:(ESTIndoorLocationManager *)manager
+            didUpdatePosition:(ESTOrientedPoint *)position
+                 withAccuracy:(ESTPositionAccuracy)positionAccuracy
+                   inLocation:(ESTLocation *)location {
+    NSString *accuracy;
+    self.currentLocationPoint = position;
+    switch (positionAccuracy) {
+        case ESTPositionAccuracyVeryHigh: accuracy = @"+/- 1.00m"; break;
+        case ESTPositionAccuracyHigh:     accuracy = @"+/- 1.62m"; break;
+        case ESTPositionAccuracyMedium:   accuracy = @"+/- 2.62m"; break;
+        case ESTPositionAccuracyLow:      accuracy = @"+/- 4.24m"; break;
+        case ESTPositionAccuracyVeryLow:  accuracy = @"+/- ? :-("; break;
+    }
+    NSLog(@"x: %5.2f, y: %5.2f, orientation: %3.0f, accuracy: %@",
+          position.x, position.y, position.orientation, accuracy);
+}
+
+-(void)getAllProducts:(int)x y: (int)y {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:  @"http://52.26.246.1:9000/product/10/10" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        self.products = responseObject[@"products"];
+        for(int i = 0; i < self.products.count ; i++) {
+            [self.numProducts addObject:[NSNumber numberWithInt:0] ];
+        }
+        
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 @end

@@ -1,16 +1,55 @@
 PODS:
+  - AFNetworking (2.6.1):
+    - AFNetworking/NSURLConnection (= 2.6.1)
+    - AFNetworking/NSURLSession (= 2.6.1)
+    - AFNetworking/Reachability (= 2.6.1)
+    - AFNetworking/Security (= 2.6.1)
+    - AFNetworking/Serialization (= 2.6.1)
+    - AFNetworking/UIKit (= 2.6.1)
+  - AFNetworking/NSURLConnection (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.1)
+  - AFNetworking/Security (2.6.1)
+  - AFNetworking/Serialization (2.6.1)
+  - AFNetworking/UIKit (2.6.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.0.0):
+    - CocoaLumberjack/Default (= 2.0.0)
+    - CocoaLumberjack/Extensions (= 2.0.0)
+  - CocoaLumberjack/Core (2.0.0)
+  - CocoaLumberjack/Default (2.0.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.0.0):
+    - CocoaLumberjack/Default
   - EstimoteIndoorSDK (1.6.0):
     - EstimoteSDK (~> 2.4.0)
   - EstimoteSDK (2.4.0)
+  - PubNub (4.1.1):
+    - CocoaLumberjack (= 2.0.0)
+    - PubNub/Core (= 4.1.1)
+  - PubNub/Core (4.1.1):
+    - CocoaLumberjack (= 2.0.0)
   - PULPulsate (1.97.2)
 
 DEPENDENCIES:
+  - AFNetworking (~> 2.0)
   - EstimoteIndoorSDK
+  - PubNub (~> 4.0)
   - PULPulsate
 
 SPEC CHECKSUMS:
+  AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
+  CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
   EstimoteIndoorSDK: 62ee267efbf5450aebffdb2c125f3f16440afb43
   EstimoteSDK: d130c9d111b1c0522222afc97b43f245660cbd7c
+  PubNub: f6f2c30142afa2c5ea503b664c1ec00c6ac50e5b
   PULPulsate: 69bf48a216f1d4f11befe2c4f0567b9bf3571a8d
 
 COCOAPODS: 0.38.2
