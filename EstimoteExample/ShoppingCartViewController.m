@@ -213,7 +213,7 @@
     
     //Process the provided token
     NSLog(@"Token:%@", token.token);
-    
+    [self performSegueWithIdentifier:@"verifySegue" sender:self];
 }
 
 -(void)chargeCardCancelled {
