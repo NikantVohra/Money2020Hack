@@ -53,13 +53,24 @@
     if(self.firstTime) {
     
     }
+    self.navigationItem.hidesBackButton = YES;
+    
+    self.navigationController.navigationBarHidden = NO;
+    self.title = @"HouseHold";
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icnCart"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(cartButtonPressed)];
+    self.navigationItem.rightBarButtonItem = item1;
+    self.navigationItem.rightBarButtonItem.tintColor = RGBCOLOR(22, 21, 15);
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.firstTime = @"YES";
-    self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
-    
+    self.products = @[@{@"id" : @"345345", @"name" : @"Clorox Disinfectant Wipes 3 x 35 ct", @"price" : [NSNumber numberWithInt:6], @"image" : @"imgPrd1"},@{@"id" : @"345345", @"name" : @"Dawn Ultra Original Dishwashing Liquid", @"price" :[NSNumber numberWithInt:2], @"image" : @"imgPrd2"}, @{@"id" : @"345345", @"name" : @"Dreft Stage 1: New Born HEC Liquid", @"price" :[NSNumber numberWithInt:3], @"image" : @"imgPrd4"}, @{@"id" : @"345345", @"name" : @"Seventh Generation Natural Dish Liquid", @"price" :[NSNumber numberWithInt:4], @"image" : @"imgPrd5"}];
+    self.numProducts = [NSMutableArray new];
+    for(int i = 0; i < self.products.count ; i++) {
+        [self.numProducts addObject:[NSNumber numberWithInt:0] ];
+    }
     self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
-    self.numberLabel.layer.cornerRadius = self.numberLabel.frame.size.width /2.0;
+    self.numberLabel.layer.cornerRadius = self.numberLabel.frame.size.width /2.2;
     self.numberLabel.layer.masksToBounds = YES;
     [self changeCheckoutValues];
     self.tableView.tableFooterView = [UIView new]
@@ -79,7 +90,7 @@
     self.isLocationChanged = NO;
     
     
-    [self getAllProducts:40 y:40];
+    //[self getAllProducts:40 y:40];
     PNConfiguration *configuration = [PNConfiguration configurationWithPublishKey:@"pub-c-8bd872c9-064b-48b1-84cc-4827a9c77968"
                                                                      subscribeKey:@"sub-c-e412cdee-7adb-11e5-ad8e-02ee2ddab7fe"];
     self.client = [PubNub clientWithConfiguration:configuration];
@@ -155,8 +166,8 @@
     NSDictionary *product = [self.products objectAtIndex:indexPath.row];
     cell.name.text = product[@"name"];
     cell.delegate = self;
-    if([UIImage imageNamed:product[@"id"]]) {
-        cell.imageProduct.image = [UIImage imageNamed:product[@"id"]];
+    if([UIImage imageNamed:product[@"image"]]) {
+        cell.imageProduct.image = [UIImage imageNamed:product[@"image"]];
     }
     cell.cardView.layer.masksToBounds = NO;
     cell.cardView.layer.shadowOffset = CGSizeMake(0, 1);
@@ -269,12 +280,12 @@ didFailToUpdatePositionWithError:(NSError *)error {
 
     if ([self.currentLocationPoint distanceToPoint:self.beaconEntrance] < 15 && ![self.previouslocation isEqualToString:@"enter"]) {
         self.previouslocation = @"enter";
-        [self getAllProducts:10 y:10];
+       // [self getAllProducts:10 y:10];
     }
     else if ([self.currentLocationPoint
               distanceToPoint:self.beaconWall] < 15 && ![self.previouslocation isEqualToString:@"exit"]) {
         [self getAllProducts:40 y:40];
-        self.previouslocation = @"exit";
+        //self.previouslocation = @"exit";
     }
 }
 

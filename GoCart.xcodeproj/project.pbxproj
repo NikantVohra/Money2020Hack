@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		058913A61BEB6B52001C488C /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058913A51BEB6B52001C488C /* CartViewController.m */; };
 		05AD96471BDD6040003BC6A9 /* ConceirgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AD96461BDD6040003BC6A9 /* ConceirgeViewController.m */; };
 		05AD964A1BDD6753003BC6A9 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AD96491BDD6753003BC6A9 /* ReceiptViewController.m */; };
 		05AD964D1BDD6CC6003BC6A9 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AD964C1BDD6CC6003BC6A9 /* WelcomeViewController.m */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		058913A41BEB6B52001C488C /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		058913A51BEB6B52001C488C /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		05AD96451BDD6040003BC6A9 /* ConceirgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConceirgeViewController.h; sourceTree = "<group>"; };
 		05AD96461BDD6040003BC6A9 /* ConceirgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConceirgeViewController.m; sourceTree = "<group>"; };
 		05AD96481BDD6753003BC6A9 /* ReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptViewController.h; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				05B6E2FB1BDC494D00B767D0 /* ESTIndoorLocationViewController.m */,
 				05B6E2FF1BDC75FC00B767D0 /* ShoppingCartViewController.h */,
 				05B6E3001BDC75FC00B767D0 /* ShoppingCartViewController.m */,
+				058913A41BEB6B52001C488C /* CartViewController.h */,
+				058913A51BEB6B52001C488C /* CartViewController.m */,
 				05AD96451BDD6040003BC6A9 /* ConceirgeViewController.h */,
 				05AD96481BDD6753003BC6A9 /* ReceiptViewController.h */,
 				05AD96491BDD6753003BC6A9 /* ReceiptViewController.m */,
@@ -392,6 +397,7 @@
 				05B6E2CA1BDAAD3700B767D0 /* ViewController.m in Sources */,
 				05B6E2FD1BDC494D00B767D0 /* ESTIndoorLocationViewController.m in Sources */,
 				05AD964D1BDD6CC6003BC6A9 /* WelcomeViewController.m in Sources */,
+				058913A61BEB6B52001C488C /* CartViewController.m in Sources */,
 				05B6E2C71BDAAD3700B767D0 /* AppDelegate.m in Sources */,
 				05B6E3011BDC75FC00B767D0 /* ShoppingCartViewController.m in Sources */,
 				05B6E2C41BDAAD3700B767D0 /* main.m in Sources */,
