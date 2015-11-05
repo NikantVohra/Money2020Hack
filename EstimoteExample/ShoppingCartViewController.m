@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (nonatomic ,strong) ESTPoint *beaconEntrance;
 @property (nonatomic ,strong) NSString *previouslocation;
-
+@property (nonatomic, strong) NSString *firstTime;
 @property (nonatomic ,strong) ESTPoint *beaconWall;
 @property (nonatomic) BOOL isLocationChanged;
 @property NSArray *products;
@@ -48,8 +48,11 @@
     self.totalAmount = 0;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    if(self.firstTime) {
     
-    //self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
+    }
+    self.firstTime = @"YES";
+    self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
     
     self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
