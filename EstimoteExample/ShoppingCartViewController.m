@@ -17,6 +17,7 @@
 #import "ESTIndoorLocationView.h"
 #import "ESTPositionView.h"
 #import <AFNetworking/AFNetworking.h>
+#import "CartViewController.h"
 #define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/225.0f green:g/225.0f blue:b/225.0f alpha:1]
 
 
@@ -101,6 +102,10 @@
     
 }
 
+-(void)cartButtonPressed{
+    [self performSegueWithIdentifier:@"showCart" sender:self];
+}
+
 -(void)sendPosition {
     if(self.currentLocationPoint) {
         [self.client publish: @{@"x" : [NSNumber numberWithDouble: self.currentLocationPoint.x], @"y" : [NSNumber numberWithDouble: self.currentLocationPoint.y]} toChannel: @"money2020" storeInHistory:YES
@@ -127,7 +132,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Make sure your segue name in storyboard is the same as this line
+    if ([[segue identifier] isEqualToString:@"showCart"])
+    {
+        // Get reference to the destination view controller
+        CartViewController *vc = [segue destinationViewController];
+        
+        // Pass any objects to the view controller here, like...
+        vc.numProducts = self.numProducts;
+        vc.totalAmount = self.totalAmount;
+        vc.numProducts = self.numProducts;
+        vc.products = self.products;
+    }
+}
 - (IBAction)checkout:(id)sender {
     PKPaymentRequest* paymentRequest = [[PKPaymentRequest alloc] init];
     paymentRequest.merchantIdentifier = @"merchant.com.velle.money2020";
@@ -144,6 +163,8 @@
     
     [self presentViewController:chargeVC animated:YES completion:nil];
 }
+
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

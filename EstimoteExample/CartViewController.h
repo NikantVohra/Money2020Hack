@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface CartViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property NSArray *products;
 
 @property ( nonatomic) NSInteger totalNumProducts;
 @property ( nonatomic) NSInteger totalAmount;
+@property NSMutableArray *numProducts;
 
 @end
