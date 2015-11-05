@@ -20,6 +20,7 @@
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.title = @"Shopping Cart";
+    self.navigationItem.hidesBackButton = YES;
     self.boughtProducts = [NSMutableArray new];
     for(int i = 0;i < self.numProducts.count;i++) {
         if([self.numProducts[i] integerValue] > 0) {
