@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak , nonatomic) id<ShoppingCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *number;
+@property (weak, nonatomic) IBOutlet UIView *cardView;
 
 @end
 

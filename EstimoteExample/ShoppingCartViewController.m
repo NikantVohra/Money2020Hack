@@ -17,6 +17,8 @@
 #import "ESTIndoorLocationView.h"
 #import "ESTPositionView.h"
 #import <AFNetworking/AFNetworking.h>
+#define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/225.0f green:g/225.0f blue:b/225.0f alpha:1]
+
 
 @interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate, ESTIndoorLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -51,6 +53,7 @@
     if(self.firstTime) {
     
     }
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.firstTime = @"YES";
     self.products = @[@{@"id" : @"345345", @"name" : @"Lays", @"price" : [NSNumber numberWithInt:1]},@{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:2]}, @{@"id" : @"345345", @"name" : @"Lays", @"price" :[NSNumber numberWithInt:5]}];
     
@@ -135,6 +138,10 @@
     return 1;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 145.0f;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.products.count;
 }
@@ -151,7 +158,12 @@
     if([UIImage imageNamed:product[@"id"]]) {
         cell.imageProduct.image = [UIImage imageNamed:product[@"id"]];
     }
-        
+    cell.cardView.layer.masksToBounds = NO;
+    cell.cardView.layer.shadowOffset = CGSizeMake(0, 1);
+   // cell.cardView.layer.shadowColor = RGBCOLOR(248.0, 248.0, 248.0).CGColor;
+    cell.cardView.layer.shadowRadius = 1;
+    cell.cardView.layer.shadowOpacity = 0.5;
+    cell.cardView.layer.cornerRadius = 5.0;
     cell.price.text = [NSString stringWithFormat:@"$%d", [product[@"price"] intValue]];
     cell.number.text = [NSString stringWithFormat:@"%d", [[self.numProducts objectAtIndex:indexPath.row] intValue]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
