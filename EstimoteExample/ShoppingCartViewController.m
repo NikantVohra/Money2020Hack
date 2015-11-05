@@ -64,7 +64,7 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.firstTime = @"YES";
-    self.products = @[@{@"id" : @"345345", @"name" : @"Clorox Disinfectant Wipes 3 x 35 ct", @"price" : [NSNumber numberWithInt:6], @"image" : @"imgPrd1"},@{@"id" : @"345345", @"name" : @"Dawn Ultra Original Dishwashing Liquid", @"price" :[NSNumber numberWithInt:2], @"image" : @"imgPrd2"}, @{@"id" : @"345345", @"name" : @"Dreft Stage 1: New Born HEC Liquid", @"price" :[NSNumber numberWithInt:3], @"image" : @"imgPrd4"}, @{@"id" : @"345345", @"name" : @"Seventh Generation Natural Dish Liquid", @"price" :[NSNumber numberWithInt:4], @"image" : @"imgPrd5"}];
+    self.products = @[@{@"id" : @"1", @"name" : @"Clorox Disinfectant Wipes 3 x 35 ct", @"price" : [NSNumber numberWithInt:6], @"image" : @"imgPrd1"},@{@"id" : @"2", @"name" : @"Dawn Ultra Original Dishwashing Liquid", @"price" :[NSNumber numberWithInt:2], @"image" : @"imgPrd2"}, @{@"id" : @"3", @"name" : @"Dreft Stage 1: New Born HEC Liquid", @"price" :[NSNumber numberWithInt:3], @"image" : @"imgPrd4"}, @{@"id" : @"4", @"name" : @"Seventh Generation Natural Dish Liquid", @"price" :[NSNumber numberWithInt:4], @"image" : @"imgPrd5"}];
     self.numProducts = [NSMutableArray new];
     for(int i = 0; i < self.products.count ; i++) {
         [self.numProducts addObject:[NSNumber numberWithInt:0] ];
@@ -143,7 +143,7 @@
         // Pass any objects to the view controller here, like...
         vc.numProducts = self.numProducts;
         vc.totalAmount = self.totalAmount;
-        vc.numProducts = self.numProducts;
+        vc.totalNumProducts = self.totalNumProducts;
         vc.products = self.products;
     }
 }

@@ -452,10 +452,10 @@
             </objects>
             <point key="canvasLocation" x="4648.5" y="451.5"/>
         </scene>
-        <!--Conceirge View Controller-->
+        <!--Verify-->
         <scene sceneID="ADk-i7-r3v">
             <objects>
-                <viewController id="6pm-66-kXN" customClass="ConceirgeViewController" sceneMemberID="viewController">
+                <viewController title="Verify" id="6pm-66-kXN" customClass="ConceirgeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hpJ-1u-all"/>
                         <viewControllerLayoutGuide type="bottom" id="ymQ-el-frq"/>
@@ -655,10 +655,10 @@
             </objects>
             <point key="canvasLocation" x="3314.5" y="375.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Verified-->
         <scene sceneID="TGc-wj-soL">
             <objects>
-                <viewController id="UQM-IG-GxX" sceneMemberID="viewController">
+                <viewController title="Verified" id="UQM-IG-GxX" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u11-WD-yxu"/>
                         <viewControllerLayoutGuide type="bottom" id="8bk-9e-IUt"/>
@@ -818,10 +818,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3N-WQ-mCt">
                                 <rect key="frame" x="50" y="556" width="274" height="54"/>
                                 <state key="normal" image="btnBackToShopping"/>
+                                <connections>
+                                    <action selector="back:" destination="AUA-a5-Pam" eventType="touchUpInside" id="8lg-6s-NeT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGh-xd-5li">
                                 <rect key="frame" x="49" y="495" width="275" height="55"/>
                                 <state key="normal" image="btnPay"/>
+                                <connections>
+                                    <action selector="pay:" destination="AUA-a5-Pam" eventType="touchUpInside" id="gV4-bs-6SB"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FXq-2r-0bb">
                                 <rect key="frame" x="24" y="446" width="32" height="17"/>
@@ -873,7 +879,10 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="items" destination="3vN-pe-0oV" id="fh2-wQ-rQY"/>
                         <outlet property="tableView" destination="kMd-fw-0nL" id="Q0G-Pe-a4o"/>
+                        <outlet property="total" destination="g81-K0-Waa" id="Twv-AG-FYh"/>
+                        <segue destination="6pm-66-kXN" kind="show" identifier="verifySegue" id="zvT-eQ-47a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="alB-vU-P6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -904,4 +913,7 @@
         <image name="shopping122" width="64" height="64"/>
         <image name="signin" width="664" height="1152"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zvT-eQ-47a"/>
+    </inferredMetricsTieBreakers>
 </document>

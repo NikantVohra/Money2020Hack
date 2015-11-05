@@ -10,7 +10,11 @@
 #define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/225.0f green:g/225.0f blue:b/225.0f alpha:1]
 #import <QuartzCore/QuartzCore.h>
 #import "ShoppingCartCell.h"
-@interface CartViewController ()<UITableViewDataSource, UITableViewDelegate>
+#import <Simplify/SIMChargeCardViewController.h>
+
+@interface CartViewController ()<UITableViewDataSource, UITableViewDelegate,SIMChargeCardViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *total;
+@property (weak, nonatomic) IBOutlet UILabel *items;
 @property(nonatomic, strong) NSMutableArray *boughtProducts;
 @end
 
@@ -31,7 +35,25 @@
     ;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.total.text = [NSString stringWithFormat:@"$%ld", (long)self.totalAmount];
+    self.items.text = [NSString stringWithFormat:@"%ld", (long)self.totalNumProducts];
     // Do any additional setup after loading the view.
+}
+- (IBAction)pay:(id)sender {
+    PKPaymentRequest* paymentRequest = [[PKPaymentRequest alloc] init];
+    paymentRequest.merchantIdentifier = @"merchant.com.velle.money2020";
+    paymentRequest.merchantCapabilities = PKMerchantCapabilityEMV | PKMerchantCapability3DS;
+    paymentRequest.supportedNetworks = @[PKPaymentNetworkAmex, PKPaymentNetworkMasterCard, PKPaymentNetworkVisa];
+    paymentRequest.countryCode = @"US";
+    PKPaymentSummaryItem *item = [PKPaymentSummaryItem summaryItemWithLabel:@"Test Item" amount:[NSDecimalNumber decimalNumberWithString:@"0.01"]];
+    paymentRequest.paymentSummaryItems = @[item];
+    paymentRequest.currencyCode = @"USD";
+    SIMChargeCardViewController *chargeVC = [[SIMChargeCardViewController alloc] initWithPublicKey:@"sbpb_NjhjODgwNTctNDVkYS00MzNmLWFmZDgtYzkzMTcyZTgwZmZl" paymentRequest:paymentRequest];
+    
+    //3. Assign your class as the delegate to the SIMChargeViewController class which takes the user input and requests a token
+    chargeVC.delegate = self;
+    
+    [self presentViewController:chargeVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,8 +77,18 @@
     static NSString *simpleTableIdentifier = @"ShoppingCell";
     
     ShoppingCartCell *cell = (ShoppingCartCell *)[self.tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    
     NSDictionary *product = [self.boughtProducts objectAtIndex:indexPath.row];
+
+    int index = 0;
+    for(int i = 0;i < self.products.count;i++) {
+        NSString *identifier = self.products[i][@"id"];
+        if([identifier isEqualToString:product[@"id"]]) {
+            index = i;
+            break;
+        }
+        
+    }
+    
     cell.name.text = product[@"name"];
     if([UIImage imageNamed:product[@"image"]]) {
         cell.imageProduct.image = [UIImage imageNamed:product[@"image"]];
@@ -68,12 +100,35 @@
     cell.cardView.layer.shadowOpacity = 0.5;
     cell.cardView.layer.cornerRadius = 5.0;
     cell.price.text = [NSString stringWithFormat:@"$%d", [product[@"price"] intValue]];
-    cell.number.text = [NSString stringWithFormat:@"%d", [[self.numProducts objectAtIndex:indexPath.row] intValue]];
+    cell.number.text = [NSString stringWithFormat:@"%d", [[self.numProducts objectAtIndex:index] intValue]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
 
+
+-(void)creditCardTokenProcessed:(SIMCreditCardToken *)token {
+    
+    //Process the provided token
+    NSLog(@"Token:%@", token.token);
+    [self performSegueWithIdentifier:@"verifySegue" sender:self];
+}
+- (IBAction)back:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)chargeCardCancelled {
+    
+    //User cancelled the SIMChargeCardViewController
+    NSLog(@"User Cancelled");
+    
+}
+
+-(void)creditCardTokenFailedWithError:(NSError *)error {
+    
+    NSLog(@"Credit Card Token Failed with error:%@", error.localizedDescription);
+    
+}
 /*
 #pragma mark - Navigation
 
