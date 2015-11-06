@@ -39,6 +39,7 @@
 @property (nonatomic ,strong) ESTPoint *beaconWall;
 @property (nonatomic) BOOL isLocationChanged;
 @property NSArray *products;
+@property(nonatomic, strong) UIBarButtonItem *numItem;
 @end
 
 @implementation ShoppingCartViewController
@@ -56,20 +57,17 @@
     }
     self.navigationItem.hidesBackButton = YES;
     
-    self.navigationController.navigationBarHidden = NO;
+    
     self.title = @"HouseHold";
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icnCart"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(cartButtonPressed)];
-    self.navigationItem.rightBarButtonItem = item1;
+    self.numItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.numItem.tintColor = RGBCOLOR(0.0, 224.0, 128.0);
+    self.navigationItem.rightBarButtonItems = @[item1,self.numItem] ;
     self.navigationItem.rightBarButtonItem.tintColor = RGBCOLOR(22, 21, 15);
-    
+    self.navigationController.navigationBarHidden = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.firstTime = @"YES";
-    self.products = @[@{@"id" : @"1", @"name" : @"Clorox Disinfectant Wipes 3 x 35 ct", @"price" : [NSNumber numberWithInt:6], @"image" : @"imgPrd1"},@{@"id" : @"2", @"name" : @"Dawn Ultra Original Dishwashing Liquid", @"price" :[NSNumber numberWithInt:2], @"image" : @"imgPrd2"}, @{@"id" : @"3", @"name" : @"Dreft Stage 1: New Born HEC Liquid", @"price" :[NSNumber numberWithInt:3], @"image" : @"imgPrd4"}, @{@"id" : @"4", @"name" : @"Seventh Generation Natural Dish Liquid", @"price" :[NSNumber numberWithInt:4], @"image" : @"imgPrd5"}];
-    self.numProducts = [NSMutableArray new];
-    for(int i = 0; i < self.products.count ; i++) {
-        [self.numProducts addObject:[NSNumber numberWithInt:0] ];
-    }
-    self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
+       self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
     self.checkoutButton.enabled = NO;
     self.numberLabel.layer.cornerRadius = self.numberLabel.frame.size.width /2.2;
     self.numberLabel.layer.masksToBounds = YES;
@@ -220,13 +218,15 @@
         self.totalAmountLabel.text = [NSString stringWithFormat:@"$%ld", (long)self.totalAmount];
         self.checkoutButton.enabled = YES;
         self.checkoutButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0f];
+        
+        self.numItem.title =  [NSString stringWithFormat:@"%ld", (long)self.totalNumProducts];
     }
     else {
         self.numberLabel.hidden = YES;
         self.totalAmountLabel.hidden = YES;
         self.checkoutButton.enabled = NO;
         self.checkoutButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0f];
-    
+        self.numItem.title = @"";
 
     }
     
@@ -299,30 +299,32 @@ didFailToUpdatePositionWithError:(NSError *)error {
     self.beaconEntrance = [[ESTPoint alloc] initWithX:10.0 y:14];;
     self.beaconWall = [[ESTPoint alloc] initWithX:-10.0 y:7.0];;
 
-    if ([self.currentLocationPoint distanceToPoint:self.beaconEntrance] < 15 && ![self.previouslocation isEqualToString:@"enter"]) {
-        self.previouslocation = @"enter";
-       // [self getAllProducts:10 y:10];
+
+     if ([self.currentLocationPoint
+              distanceToPoint:self.beaconWall] < 5 && ![self.previouslocation isEqualToString:@"exit"]) {
+        [self getAllProducts:0 y:0];
     }
-    else if ([self.currentLocationPoint
-              distanceToPoint:self.beaconWall] < 15 && ![self.previouslocation isEqualToString:@"exit"]) {
-        [self getAllProducts:40 y:40];
-        //self.previouslocation = @"exit";
-    }
+     else  {
+         [self removeallproducts];
+     }
 }
 
+
+-(void)removeallproducts {
+    if(self.products.count >0) {
+        self.products = @[];
+        [self.tableView reloadData];
+    }
+}
 -(void)getAllProducts:(int)x y: (int)y {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:  [NSString stringWithFormat: @"http://52.26.246.1:9000/product/%d/%d", x, y] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        self.products = responseObject[@"products"];
-        [self.numProducts removeAllObjects];
+
+    if(self.products.count == 0) {
+        self.products = @[@{@"id" : @"1", @"name" : @"Clorox Disinfectant Wipes 3 x 35 ct", @"price" : [NSNumber numberWithInt:6], @"image" : @"imgPrd1"},@{@"id" : @"2", @"name" : @"Dawn Ultra Original Dishwashing Liquid", @"price" :[NSNumber numberWithInt:2], @"image" : @"imgPrd2"}, @{@"id" : @"3", @"name" : @"Dreft Stage 1: New Born HEC Liquid", @"price" :[NSNumber numberWithInt:3], @"image" : @"imgPrd4"}, @{@"id" : @"4", @"name" : @"Seventh Generation Natural Dish Liquid", @"price" :[NSNumber numberWithInt:4], @"image" : @"imgPrd5"}];
+        self.numProducts = [NSMutableArray new];
         for(int i = 0; i < self.products.count ; i++) {
             [self.numProducts addObject:[NSNumber numberWithInt:0] ];
         }
-        
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    }
 }
 @end
