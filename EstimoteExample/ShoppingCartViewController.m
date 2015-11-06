@@ -18,10 +18,18 @@
 #import "ESTPositionView.h"
 #import <AFNetworking/AFNetworking.h>
 #import "CartViewController.h"
+#import "ESTBeacon.h"
+#import "ESTBeaconManager.h"
+#import "ESTBeaconRegion.h"
 #define RGBCOLOR(r, g, b) [UIColor colorWithRed:r/225.0f green:g/225.0f blue:b/225.0f alpha:1]
 
+// Update these to match your required settings
+//
+NSString * const REGION_IDENTIFER           = @"regionid";
+CLBeaconMajorValue BEACON_MAJOR_VERSION     = 20283;
+CLBeaconMajorValue BEACON_MINOR_VERSION     = 38514;
 
-@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate, ESTIndoorLocationManagerDelegate>
+@interface ShoppingCartViewController ()<UITableViewDelegate, UITableViewDataSource, ShoppingCellDelegate, SIMChargeCardViewControllerDelegate, ESTBeaconManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *numProducts;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
@@ -39,7 +47,11 @@
 @property (nonatomic ,strong) ESTPoint *beaconWall;
 @property (nonatomic) BOOL isLocationChanged;
 @property NSArray *products;
+@property (nonatomic, strong) ESTBeaconManager* beaconManager;
+
 @property(nonatomic, strong) UIBarButtonItem *numItem;
+@property(nonatomic, strong) UIBarButtonItem *beaconItem;
+
 @end
 
 @implementation ShoppingCartViewController
@@ -60,8 +72,11 @@
     
     self.title = @"HouseHold";
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icnCart"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(cartButtonPressed)];
+    self.beaconItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icnBeaconOn"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.leftBarButtonItem = self.beaconItem;
     self.numItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.numItem.tintColor = RGBCOLOR(0.0, 224.0, 128.0);
+    self.beaconItem.tintColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItems = @[item1,self.numItem] ;
     self.navigationItem.rightBarButtonItem.tintColor = RGBCOLOR(22, 21, 15);
     self.navigationController.navigationBarHidden = NO;
@@ -75,16 +90,14 @@
     self.tableView.tableFooterView = [UIView new]
     ;
     self.previouslocation = @"asdads";
-    self.locationManager = [ESTIndoorLocationManager new];
-    self.locationManager.delegate = self;
-    [self.locationManager fetchNearbyPublicLocationsWithSuccess:^(id object) {
-        self.location = [object firstObject];
-        
-        [self.locationManager startIndoorLocation:self.location];
-        NSLog(@"%@", self.location);
-    } failure:^(NSError *error) {
-        
-    }];
+    self.beaconManager = [[ESTBeaconManager alloc] init];
+    self.beaconManager.delegate = self;
+    ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID
+                                                                       major:BEACON_MAJOR_VERSION
+                                                                       minor:BEACON_MINOR_VERSION
+                                                                  identifier:REGION_IDENTIFER];
+    
+    [self.beaconManager startRangingBeaconsInRegion:region];
     
     self.isLocationChanged = NO;
     
@@ -314,6 +327,8 @@ didFailToUpdatePositionWithError:(NSError *)error {
     if(self.products.count >0) {
         self.products = @[];
         [self.tableView reloadData];
+        self.beaconItem.tintColor = [UIColor blackColor];
+
     }
 }
 -(void)getAllProducts:(int)x y: (int)y {
@@ -324,7 +339,51 @@ didFailToUpdatePositionWithError:(NSError *)error {
         for(int i = 0; i < self.products.count ; i++) {
             [self.numProducts addObject:[NSNumber numberWithInt:0] ];
         }
+        self.beaconItem.tintColor = RGBCOLOR(0.0, 224.0, 128.0);
+
         [self.tableView reloadData];
     }
+    
+}
+
+
+- (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
+{
+    if ([beacons count] > 0) {
+        ESTBeacon *closestBeacon = [beacons firstObject];
+        
+        [self performSelectorOnMainThread:@selector(updateUI:) withObject:closestBeacon waitUntilDone:YES];
+    }
+}
+
+- (void)updateUI:(ESTBeacon *)beacon
+{
+   
+    
+    switch (beacon.proximity) {
+        case CLProximityImmediate:
+        {
+            [self getAllProducts:0 y:0];
+    
+        }
+            break;
+        case CLProximityNear:
+        {
+            [self getAllProducts:0 y:0];
+                   }
+            break;
+        case CLProximityFar:
+        {
+            [self getAllProducts:0 y:0];
+        }
+            break;
+        case CLProximityUnknown:
+        {
+           [self removeallproducts];
+        }
+            break;
+    }
+    NSLog(@" Distance : %f",[beacon.distance floatValue]);
+    
 }
 @end
